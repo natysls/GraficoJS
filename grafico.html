@@ -14,42 +14,41 @@
         // based on prepared DOM, initialize echarts instance
         var myChart = echarts.init(document.getElementById('main'));
 
-        function randomValor(){
-            var random = Math.random * 100;
-            return random;
+        function getRandom() {
+            return Math.random() * 100;
         }
-
+        var array = [];
+        for(var i = 100; i<1000; i++){
+            array.push(getRandom());
+        }
         // specify chart configuration item and data
         var option = {
             title: {
-                text: 'ECharts entry example'
+                text: 'Gráfico de Linha Randomico'
             },
             tooltip: {},
             legend: {
-                data:['Sales']
+                data:['Steps']
             },
             xAxis: {
                 type: 'category',
-                data: ['Dom','Seg','Ter','Qua','Qui','Sex', 'Sab']
+                data: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"]
             },
             yAxis: {
-                type: 'value',
-                data: [1, 2, 3, 4, 5, 6, 7]
+                type: 'value'
             },
             series: [{
                 name: 'Sales',
                 type: 'line',
-                data: randomValor()
+                data: array
             }],
         };
-
-        setInterval(randomValor, 2000);
+    
+        var atualizar = setInterval(getRandom, 2000);
 
         // use configuration item and data specified to show chart
         myChart.setOption(option);
         
-
-
 
     </script>
 
