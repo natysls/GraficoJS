@@ -13,25 +13,21 @@
     <script type="text/javascript">
         // based on prepared DOM, initialize echarts instance
         var myChart = echarts.init(document.getElementById('main'));
-        
+        var tmp = new Array();
         
         var array = [];
-        for(var i = 0; i<10; i++){
-            array.push(getRandom(100, 1000));
-        }
         var valor = [];
-        for(var j = 0; j<10; j++){
-            valor.push(j++);
+
+        for(var i = 0; i<10; i++){
+            var y = array.push(getRandom(100, 1000));
+            var x = valor.push(i++);
+
+            tmp[i] = setInterval((x, y) => {
+                y++;
+                x++;
+            }, 3000);
         }
         
-
-        setInterval((array, valor) => {
-            for(var i = 0; i<10; i++){
-            array.push(getRandom(100, 1000));
-            valor.push(i++);
-        }
-        }, 3000);
-
         function getRandom(min, max) {
             return Math.floor(Math.random() * (max - min)) + min;
         }
