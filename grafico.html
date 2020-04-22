@@ -13,14 +13,29 @@
     <script type="text/javascript">
         // based on prepared DOM, initialize echarts instance
         var myChart = echarts.init(document.getElementById('main'));
-
-        function getRandom() {
-            return Math.random() * 100;
-        }
+        
+        
         var array = [];
-        for(var i = 100; i<1000; i++){
-            array.push(getRandom());
+        for(var i = 0; i<10; i++){
+            array.push(getRandom(100, 1000));
         }
+        var valor = [];
+        for(var j = 0; j<10; j++){
+            valor.push(j++);
+        }
+        
+
+        setInterval((array, valor) => {
+            for(var i = 0; i<10; i++){
+            array.push(getRandom(100, 1000));
+            valor.push(i++);
+        }
+        }, 3000);
+
+        function getRandom(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
         // specify chart configuration item and data
         var option = {
             title: {
@@ -32,7 +47,7 @@
             },
             xAxis: {
                 type: 'category',
-                data: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"]
+                data: valor
             },
             yAxis: {
                 type: 'value'
@@ -43,13 +58,10 @@
                 data: array
             }],
         };
-    
-        var atualizar = setInterval(getRandom, 2000);
 
         // use configuration item and data specified to show chart
         myChart.setOption(option);
         
-
     </script>
 
 </body>
