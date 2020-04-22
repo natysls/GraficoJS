@@ -1,5 +1,6 @@
 <!DOCTYPE html>
-<html>
+
+<html lang="pt-br">
 <head>
     <meta charset="utf-8">
     <title>ECharts</title>
@@ -13,6 +14,11 @@
         // based on prepared DOM, initialize echarts instance
         var myChart = echarts.init(document.getElementById('main'));
 
+        function randomValor(){
+            var random = Math.random * 100;
+            return random;
+        }
+
         // specify chart configuration item and data
         var option = {
             title: {
@@ -23,18 +29,25 @@
                 data:['Sales']
             },
             xAxis: {
-                data: ["shirt","cardign","chiffon shirt","pants","heels","socks"]
+                type: 'category',
+                data: ['Dom','Seg','Ter','Qua','Qui','Sex', 'Sab']
             },
-            yAxis: {},
+            yAxis: {
+                type: 'value',
+                data: [1, 2, 3, 4, 5, 6, 7]
+            },
             series: [{
                 name: 'Sales',
-                type: 'bar',
-                data: [5, 20, 36, 10, 10, 20]
-            }]
+                type: 'line',
+                data: randomValor()
+            }],
         };
+
+        setInterval(randomValor, 2000);
 
         // use configuration item and data specified to show chart
         myChart.setOption(option);
+        
 
 
 
