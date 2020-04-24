@@ -1,55 +1,74 @@
 <!DOCTYPE html>
-<html lang="en">
+
+<html lang="pt-br">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Grafico de Linha Area JS</title>
+    <meta charset="utf-8">
+    <title>ECharts</title>
+    <!-- including ECharts file -->
+    <script src="echarts.js"></script>
 </head>
 <body>
-    <canvas class="line-chart"></canvas>
-    
-    <script src= "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
+    <!-- prepare a DOM container with width and height -->
+    <div id="main" style="width: 600px;height:400px;"></div>
+    <script type="text/javascript">
+        // based on prepared DOM, initialize echarts instance
+        var myChart = echarts.init(document.getElementById('main'));
 
-    <script>
-        var ctx = document.getElementsByClassName("line-chart");
+        var j = 0;
+        var x = [];
+        var y = [];
 
-        function getRandom(){
-            var randomValue = Math.random();
-            return randomValue;
-        }
-        //Type, Data e options
-        var chartGraph = new Chart(ctx,{
-            type: 'line',
-            data: {
-                labels: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
-                datasets: [{
-                    label: "TAXA 2020",
-                    data:[{
-                        x: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
-                        y: setInterval(getRandom, 2000)
-                    }],
-                    boderWidth: 6,
-                    borderColor: 'rgba(77,166,253,0.85)',
-                    backgroundColor: 'transparent'
-                }]
-            },
-            options:{
-                title: {
-                    display: true,
-                    fontSize: 20,
-                    text: "RELATORIO 2020"
-                },
-                labels:{
-                    fontStyle: "bold"
-                },
-                scales: {
-                    yAxes: [{
-                        stacked: true
-                    }]
-                }
+        function aumentaUm(shift){
+            x.push(j++);
+            y.push(getRandom(100, 1000));
+
+            if(shift){
+                x.shift();
+                y.shift();
             }
-        });
+        }
+
+        for(var i = 0; i< 10; i++){
+            aumentaUm();
+        }
+
+        function getRandom(min, max) {
+            return Math.floor(Math.random() * (max - min)) + min;
+        }
+
+        // specify chart configuration item and data
+        var option = {
+            title: {
+                text: 'Gráfico de Linha Randomico'
+            },
+            tooltip: {},
+            legend: {
+                data:['Steps']
+            },
+            xAxis: {
+                min: 0,
+                type: 'category',
+                data: x
+            },
+            yAxis: {
+                min: 100,
+                max: 1000,
+                type: 'value'
+            },
+            series: [{
+                name: 'Sales',
+                type: 'line',
+                data: y
+            }],
+        };
+
+        // use configuration item and data specified to show chart
+        setInterval(() => {
+            aumentaUm(true);
+            myChart.setOption(option);
+        }, 2000);    
 
     </script>
+
 </body>
 </html>
