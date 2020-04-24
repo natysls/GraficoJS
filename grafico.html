@@ -1,64 +1,55 @@
 <!DOCTYPE html>
-
-<html lang="pt-br">
+<html lang="en">
 <head>
-    <meta charset="utf-8">
-    <title>ECharts</title>
-    <!-- including ECharts file -->
-    <script src="echarts.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Grafico de Linha Area JS</title>
 </head>
 <body>
-    <!-- prepare a DOM container with width and height -->
-    <div id="main" style="width: 600px;height:400px;"></div>
-    <script type="text/javascript">
-        // based on prepared DOM, initialize echarts instance
-        var myChart = echarts.init(document.getElementById('main'));
-        var tmp = new Array();
-        
-        var array = [];
-        var valor = [];
+    <canvas class="line-chart"></canvas>
+    
+    <script src= "https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.9.3/Chart.min.js"></script>
 
-        for(var i = 0; i<10; i++){
-            var y = array.push(getRandom(100, 1000));
-            var x = valor.push(i++);
+    <script>
+        var ctx = document.getElementsByClassName("line-chart");
 
-            tmp[i] = setInterval((x, y) => {
-                y++;
-                x++;
-            }, 3000);
+        function getRandom(){
+            var randomValue = Math.random();
+            return randomValue;
         }
-        
-        function getRandom(min, max) {
-            return Math.floor(Math.random() * (max - min)) + min;
-        }
+        //Type, Data e options
+        var chartGraph = new Chart(ctx,{
+            type: 'line',
+            data: {
+                labels: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+                datasets: [{
+                    label: "TAXA 2020",
+                    data:[{
+                        x: ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"],
+                        y: setInterval(getRandom, 2000)
+                    }],
+                    boderWidth: 6,
+                    borderColor: 'rgba(77,166,253,0.85)',
+                    backgroundColor: 'transparent'
+                }]
+            },
+            options:{
+                title: {
+                    display: true,
+                    fontSize: 20,
+                    text: "RELATORIO 2020"
+                },
+                labels:{
+                    fontStyle: "bold"
+                },
+                scales: {
+                    yAxes: [{
+                        stacked: true
+                    }]
+                }
+            }
+        });
 
-        // specify chart configuration item and data
-        var option = {
-            title: {
-                text: 'Gráfico de Linha Randomico'
-            },
-            tooltip: {},
-            legend: {
-                data:['Steps']
-            },
-            xAxis: {
-                type: 'category',
-                data: valor
-            },
-            yAxis: {
-                type: 'value'
-            },
-            series: [{
-                name: 'Sales',
-                type: 'line',
-                data: array
-            }],
-        };
-
-        // use configuration item and data specified to show chart
-        myChart.setOption(option);
-        
     </script>
-
 </body>
 </html>
